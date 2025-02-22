@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benutzerinfos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Benutzerinformationen</h1>
+    <div id="user-info">
+        <!-- Benutzerinfos werden hier angezeigt -->
+    </div>
+
+    <script>
+        // Fetch die Benutzerdaten von der API
+        fetch('http://localhost:5000/user-data')
+            .then(response => response.json())
+            .then(data => {
+                let output = '<ul>';
+                data.forEach(user => {
+                    output += `
+                        <li>
+                            <strong>Displayname:</strong> ${user.displayname} <br>
+                            <strong>User ID:</strong> ${user.user_id} <br>
+                            <strong>Beigetreten:</strong> ${user.joined_server} <br>
+                            <strong>Discord beigetreten:</strong> ${user.discord_joined_at} <br>
+                            <strong>Server:</strong> ${user.server}
+                        </li>`;
+                });
+                output += '</ul>';
+                document.getElementById('user-info').innerHTML = output;
+            })
+            .catch(error => {
+                console.error('Fehler beim Abrufen der Daten:', error);
+            });
+    </script>
+</body>
+</html>
